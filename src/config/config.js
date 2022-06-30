@@ -14,4 +14,7 @@ module.exports = {
     poolMax: 10,
     poolIncrement: 0,
   },
+  api_exchange: {
+    api_key: process.env.API_KEY_EXCHANGE,
+  },
 };
