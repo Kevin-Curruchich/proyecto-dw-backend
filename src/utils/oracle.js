@@ -2,9 +2,9 @@ const oracledb = require("oracledb");
 const path = require("path");
 const { oracleConfig } = require("../config/config");
 
-const oracleClient = path.join("C:", "Oracle", "bin");
+//const oracleClient = path.join("C:", "Oracle", "bin");
 
-oracledb.initOracleClient({ libDir: oracleClient });
+//oracledb.initOracleClient({ libDir: oracleClient });
 
 //abrimos la base de datos
 module.exports.start = async () => {
