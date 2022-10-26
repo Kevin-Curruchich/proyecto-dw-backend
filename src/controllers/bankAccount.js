@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { errorOnConcurrentExecute } = require("oracledb");
+// const { errorOnConcurrentExecute } = require("oracledb");
 const { api_exchange } = require("../config/config");
 const BankAccount = require("../models/bankAccount");
 

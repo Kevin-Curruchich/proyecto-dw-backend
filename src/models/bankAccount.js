@@ -1,5 +1,5 @@
-const oracledb = require("oracledb");
-const { pool } = require("../utils/oracle");
+// const oracledb = require("oracledb");
+// const { pool } = require("../utils/oracle");
 
 //Select de las cuentas que tiene el usuario mediante el token
 module.exports.getBankAccounts = ({ cookietoken }) => {

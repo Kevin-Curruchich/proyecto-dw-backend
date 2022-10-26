@@ -1,4 +1,4 @@
-const { pool } = require("../utils/oracle");
+// const { pool } = require("../utils/oracle");
 
 module.exports.verifyPersonToken = ({ person_token }) => {
   const bindings = { person_token };
