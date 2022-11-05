@@ -5,9 +5,7 @@ var con = mysql.createConnection({
   host: dbConfig.db.host,
   user: dbConfig.db.user,
   password: dbConfig.db.password,
+  database: dbConfig.db.database,
 });
 
-con.connect(function (err) {
-  if (err) throw err;
-  console.log("Conenected!");
-});
+module.exports = con;

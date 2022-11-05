@@ -27,7 +27,7 @@ const config = {
     database: "dw22",
   },
   server: {
-    port: 8081,
+    port: 8500,
   },
   listPerPage: 10,
 };

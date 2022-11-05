@@ -11,24 +11,15 @@ module.exports.registerPerson = async (req, res, next) => {
   };
 
   try {
-    const { outBinds } = await Person.register(args);
-    const { person_token } = outBinds;
+    const response = await Person.register(args);
 
-    res
-      .cookie("auth_token", person_token[0], {
-        sameSite: "none",
-        secure: true,
-        expires: new Date(2147483647 * 1000),
-      })
-      .status(200)
-      .json({
-        message: "User Register Succes!",
-        data: {
-          auth_token: person_token[0],
-          first_name: args.first_name,
-          last_name: args.last_name,
-        },
-      });
+    res.status(200).json({
+      message: "User Register Succes!",
+      data: {
+        first_name: args.first_name,
+        last_name: args.last_name,
+      },
+    });
   } catch (error) {
     res.status(400).json({ message: error });
   }
@@ -41,27 +32,22 @@ module.exports.loginPerson = async (req, res, next) => {
   };
 
   try {
-    const { rows: hashPasswordRow } = await Person.hashPassword(args);
-    if (hashPasswordRow.length) {
-      const hasPassword = hashPasswordRow[0]["PASSWORD"];
+    const result = await Person.hashPassword(args);
+    console.log({ result });
+    if (result.length) {
+      const hasPassword = result[0]["password"];
+      console.log({ hasPassword });
       if (bycript.compareSync(args.password, hasPassword)) {
-        const { outBinds } = await Person.login(args);
-        const { person_token, first_name, last_name } = outBinds;
-        return res
-          .status(200)
-          .cookie("auth_token", person_token[0], {
-            sameSite: "none",
-            secure: false,
-            expires: new Date(2147483647 * 1000),
-          })
-          .json({
-            message: "Login Succes!",
-            data: {
-              auth_token: person_token[0],
-              first_name: first_name[0],
-              last_name: last_name[0],
-            },
-          });
+        // const { outBinds } = await Person.login(args);
+        const { first_name, last_name } = result[0];
+        console.log({ first_name, last_name });
+        return res.status(200).json({
+          message: "Login Succes!",
+          data: {
+            first_name,
+            last_name,
+          },
+        });
       }
     }
     res

@@ -6,6 +6,9 @@ const cookies = require("cookie-parser");
 const { server } = require("./src/config/config");
 const guard = require("./src/guard/guard");
 const personInfo = require("./src/routes/person_info");
+const trucks = require("./src/routes/trucks");
+const transportRental = require("./src/routes/transportRental");
+const general = require("./src/routes/general");
 const personRoutes = require("./src/routes/person");
 const bankAccountRoutes = require("./src/routes/bankAccount");
 
@@ -18,6 +21,9 @@ app.use(personRoutes);
 // app.use(guard);
 app.use(personInfo);
 app.use(bankAccountRoutes);
+app.use(trucks);
+app.use(transportRental);
+app.use(general);
 
 app.listen(server.port, () => {
   console.log(`Server running on port: http://localhost:${server.port}`);

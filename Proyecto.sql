@@ -1,4 +1,5 @@
-
+CREATE DATABASE dw22;
+use dw22;
 /*1*/
 CREATE TABLE `PlantasMinerales` (
 	`id_plantas_mineras` INT NOT NULL,
@@ -80,7 +81,6 @@ CREATE TABLE `Personal` (
 	`P_DPI` varchar(255) ,
 	`P_edad` varchar(255) ,
 	`P_nit` INT ,
-	`P_edad` INT ,
 	`P_telefono` INT ,
 	PRIMARY KEY (`id_personal`)
 );
@@ -133,100 +133,9 @@ CREATE TABLE `Servicios`(
     PRIMARY KEY (`id_servicio`)
 );
 
-use dw22;
-
-SELECT PASSWORD FROM PERSON WHERE EMAIL = 'kevin@gmail.com';
-SELECT * FROM PERSON;
 
 
-delete FROM person where person > 1;
 
-CREATE TABLE `Person`(
-	`person` INT NOT NULL auto_increment,
-    `email` varchar(255) not null,
-	`password` varchar(255)not null,
-    `first_name` varchar(255) not null,
-    `last_name` varchar(255) not null,
-    PRIMARY KEY(`person`)
-);
-
-use dw22;
-CREATE TABLE `TRUCKS_BRANDS`(
-	`truck_brand_id` INT NOT NULL auto_increment,
-    `truck_brand` varchar(255) not null,
-    PRIMARY KEY(`truck_brand_id`)
-);
-
-CREATE TABLE `TRUCK_TONS` (
-	`truck_ton_id` INT NOT NULL auto_increment,
-    `truck_tone_capacity` float,
-    primary key (`truck_ton_id`)
-);
-
-INSERT INTO TRUCK_TONS (truck_tone_capacity) values (20);
-
-INSERT INTO TRUCKS_BRANDS (truck_brand) values ('Hino');
-
-CREATE TABLE TRUCKS (
-	truck_id INT NOT NULL auto_increment,
-    truck_brand INT NOT NULL,
-    truck_ton INT NOT NULL,
-    truck_unique_code varchar(255) not null,
-    PRIMARY KEY(truck_id),
-    UNIQUE KEY(truck_unique_code)
-);
-
-DROP TABLE TRUCKS;
-
-select * from TRUCK_TONS;
-SELECT * FROM TRUCKS_BRANDS;
-
-select * from trucks;
-ALTER TABLE TRUCKS ADD CONSTRAINT `FK_TRUCKS_BRAND` FOREIGN KEY (`truck_brand`) REFERENCES `TRUCKS_BRANDS`(`truck_brand_id`);
-ALTER TABLE TRUCKS ADD CONSTRAINT `FK_TRUCKS_TON` FOREIGN KEY (`truck_ton`) REFERENCES `TRUCK_TONS`(`truck_ton_id`);
-
-SELECT TKB.truck_brand, TRUCK_UNIQUE_CODE FROM TRUCKS TK INNER JOIN TRUCKS_BRANDS TKB ON TK.truck_brand = TKB.truck_brand_id;
-
-
-CREATE TABLE DEPARTAMENTOS (
-	departament_id INT NOT NULL auto_increment,
-    departament_label varchar(255),
-    PRIMARY KEY(departament_id)
-);
-
-INSERT INTO DEPARTAMENTOS (departament_label) VALUES ('Jutiapa');
-SELECT * FROM DEPARTAMENTOS;
-
-CREATE TABLE TIPO_ALQUILER_TRANSPORTE (
-	id_tipo_alquiler INT NOT NULL auto_increment,
-    tipo_alquiler_label varchar(255),
-    PRIMARY KEY(id_tipo_alquiler)
-);
-
-INSERT INTO TIPO_ALQUILER_TRANSPORTE (tipo_alquiler_label) VALUES('Llevar/Traer');
-
-CREATE TABLE ALQUILER_TRANSPORTE (
-	id_alquiler_transporte INT NOT NULL auto_increment,
-    truck_unique_code varchar(255) NOT NULL,
-    id_deparamento INT NOT NULL,
-    id_tipo_alquiler INT NOT NULL,
-    precio REAL NOT NULL,
-    descripcion varchar(255),
-    PRIMARY KEY (id_alquiler_transporte)
-);
-
-DROP TABLE ALQUILER_TRANSPORTE;
-
-ALTER TABLE `ALQUILER_TRANSPORTE` ADD CONSTRAINT `FK_ALQUILER_TRANSPORTE_TRUCK` FOREIGN KEY (`truck_unique_code`) REFERENCES `TRUCKS`(`truck_unique_code`);
-ALTER TABLE `ALQUILER_TRANSPORTE` ADD CONSTRAINT `FK_ALQUILER_TRANSPORTE_TYPE` FOREIGN KEY (`id_tipo_alquiler`) REFERENCES `TIPO_ALQUILER_TRANSPORTE`(`id_tipo_alquiler`);
-ALTER TABLE `ALQUILER_TRANSPORTE` ADD CONSTRAINT `FK_ALQUILER_TRANSPORTE_DEPARTAMENTO` FOREIGN KEY (`id_deparamento`) REFERENCES `DEPARTAMENTOS`(`departament_id`);
-
-SELECT * FROM ALQUILER_TRANSPORTE;
-
-INSERT INTO ALQUILER_TRANSPORTE(truck_unique_code, id_deparamento, id_tipo_alquiler, precio, descripcion ) VALUES ("ab12", 1, 1, 1, "prueba");
-
-
-SELECT * FROM TIPO_ALQUILER_TRANSPORTE;
 ALTER TABLE `GPSPagos` ADD CONSTRAINT `GPSPagos_fk0` FOREIGN KEY (`id_vehiculo`) REFERENCES `Vehiculos`(`id_vehiculo`);
 
 
