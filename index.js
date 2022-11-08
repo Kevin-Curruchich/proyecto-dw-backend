@@ -7,6 +7,7 @@ const { server } = require("./src/config/config");
 const guard = require("./src/guard/guard");
 const personInfo = require("./src/routes/person_info");
 const trucks = require("./src/routes/trucks");
+const extraction = require("./src/routes/extraction");
 const transportRental = require("./src/routes/transportRental");
 const general = require("./src/routes/general");
 const personRoutes = require("./src/routes/person");
@@ -22,6 +23,7 @@ app.use(personRoutes);
 app.use(personInfo);
 app.use(bankAccountRoutes);
 app.use(trucks);
+app.use(extraction);
 app.use(transportRental);
 app.use(general);
 

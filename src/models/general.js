@@ -32,3 +32,35 @@ module.exports.getAllTransportRentalTypes = () => {
     );
   });
 };
+
+module.exports.getBudget = () => {
+  return new Promise((resolve, reject) => {
+    sql.query(
+      `SELECT P.id_prespuesto, C.C_descrpcion, P.presupuesto FROM PRESUPUESTOS P INNER JOIN COMPANIAS C ON P.id_compania = C.id_compania;`,
+      function (err, result, fields) {
+        if (err) {
+          reject(err);
+          throw err;
+        } else {
+          resolve(result);
+        }
+      }
+    );
+  });
+};
+
+module.exports.getEmployees = () => {
+  return new Promise((resolve, reject) => {
+    sql.query(
+      `SELECT id_personal, P_nombre, P_apellido, P_DPI FROM PERSONAL;`,
+      function (err, result, fields) {
+        if (err) {
+          reject(err);
+          throw err;
+        } else {
+          resolve(result);
+        }
+      }
+    );
+  });
+};

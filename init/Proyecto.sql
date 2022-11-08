@@ -56,9 +56,10 @@ CREATE TABLE `TransportesMateriaPrima` (
 CREATE TABLE `Ubicaciones` (
 	`id_ubicacion` INT NOT NULL,
 	`U_descripcion` varchar(255) ,
-	`id_compania` INT NOT NULL,
 	PRIMARY KEY (`id_ubicacion`)
 );
+
+
 /*8*/
 CREATE TABLE `TransporteDeProductos` (
 	`id_transporte_producto` INT NOT NULL,
@@ -72,18 +73,31 @@ CREATE TABLE `Companias` (
 	`C_descrpcion` varchar(255) ,
 	PRIMARY KEY (`id_compania`)
 );
+
+INSERT INTO Companias (id_compania, C_descrpcion) VALUES (1, 'La minera');
+INSERT INTO Companias (id_compania, C_descrpcion) VALUES (2, 'Minera MJ');
+INSERT INTO Companias (id_compania, C_descrpcion) VALUES (3, 'Extractora JR');
+
 /*10*/
 CREATE TABLE `Personal` (
 	`id_personal` INT NOT NULL,
 	`P_nombre` varchar(255) ,
 	`P_apellido` varchar(255) ,
-	`P_DPI` varchar(255) ,
-	`P_edad` varchar(255) ,
+	`P_DPI` INT NOT NULL,
+	`P_edad` INT NOT NULL,
 	`P_nit` INT ,
-	`P_edad` INT ,
 	`P_telefono` INT ,
 	PRIMARY KEY (`id_personal`)
 );
+
+DROP TABLE PERSONAL;
+
+INSERT INTO PERSONAL (id_personal, P_nombre, P_apellido, P_DPI, P_edad, P_nit, P_telefono) VALUES (1, 'Pedro', 'Martinez', 23241234, 23, 32323, 54345654);
+INSERT INTO PERSONAL (id_personal, P_nombre, P_apellido, P_DPI, P_edad, P_nit, P_telefono) VALUES (2, 'Juan', 'Perez', 3453123, 22, 534342, 523141541);
+INSERT INTO PERSONAL (id_personal, P_nombre, P_apellido, P_DPI, P_edad, P_nit, P_telefono) VALUES (3, 'Esteban', 'Juarez', 54563423, 32, 3251, 34543212);
+INSERT INTO PERSONAL (id_personal, P_nombre, P_apellido, P_DPI, P_edad, P_nit, P_telefono) VALUES (4, 'Isidro', 'Mendez', 43574324, 43, 5423, 34321768);
+INSERT INTO PERSONAL (id_personal, P_nombre, P_apellido, P_DPI, P_edad, P_nit, P_telefono) VALUES (5, 'Ester', 'Lainez', 76545678, 34, 7678, 54678321);
+
 /*11*/
 CREATE TABLE `DetalleServicios` (
 	`id_detalle_servicio` INT NOT NULL,
@@ -133,14 +147,6 @@ CREATE TABLE `Servicios`(
     PRIMARY KEY (`id_servicio`)
 );
 
-use dw22;
-
-SELECT PASSWORD FROM PERSON WHERE EMAIL = 'kevin@gmail.com';
-SELECT * FROM PERSON;
-
-
-delete FROM person where person > 1;
-
 CREATE TABLE `Person`(
 	`person` INT NOT NULL auto_increment,
     `email` varchar(255) not null,
@@ -150,7 +156,6 @@ CREATE TABLE `Person`(
     PRIMARY KEY(`person`)
 );
 
-use dw22;
 CREATE TABLE `TRUCKS_BRANDS`(
 	`truck_brand_id` INT NOT NULL auto_increment,
     `truck_brand` varchar(255) not null,
@@ -164,7 +169,6 @@ CREATE TABLE `TRUCK_TONS` (
 );
 
 INSERT INTO TRUCK_TONS (truck_tone_capacity) values (20);
-
 INSERT INTO TRUCKS_BRANDS (truck_brand) values ('Hino');
 
 CREATE TABLE TRUCKS (
@@ -176,17 +180,11 @@ CREATE TABLE TRUCKS (
     UNIQUE KEY(truck_unique_code)
 );
 
-DROP TABLE TRUCKS;
 
-select * from TRUCK_TONS;
-SELECT * FROM TRUCKS_BRANDS;
-
-select * from trucks;
 ALTER TABLE TRUCKS ADD CONSTRAINT `FK_TRUCKS_BRAND` FOREIGN KEY (`truck_brand`) REFERENCES `TRUCKS_BRANDS`(`truck_brand_id`);
 ALTER TABLE TRUCKS ADD CONSTRAINT `FK_TRUCKS_TON` FOREIGN KEY (`truck_ton`) REFERENCES `TRUCK_TONS`(`truck_ton_id`);
 
 SELECT TKB.truck_brand, TRUCK_UNIQUE_CODE FROM TRUCKS TK INNER JOIN TRUCKS_BRANDS TKB ON TK.truck_brand = TKB.truck_brand_id;
-
 
 CREATE TABLE DEPARTAMENTOS (
 	departament_id INT NOT NULL auto_increment,
@@ -194,16 +192,11 @@ CREATE TABLE DEPARTAMENTOS (
     PRIMARY KEY(departament_id)
 );
 
-INSERT INTO DEPARTAMENTOS (departament_label) VALUES ('Jutiapa');
-SELECT * FROM DEPARTAMENTOS;
-
 CREATE TABLE TIPO_ALQUILER_TRANSPORTE (
 	id_tipo_alquiler INT NOT NULL auto_increment,
     tipo_alquiler_label varchar(255),
     PRIMARY KEY(id_tipo_alquiler)
 );
-
-INSERT INTO TIPO_ALQUILER_TRANSPORTE (tipo_alquiler_label) VALUES('Llevar/Traer');
 
 CREATE TABLE ALQUILER_TRANSPORTE (
 	id_alquiler_transporte INT NOT NULL auto_increment,
@@ -215,18 +208,58 @@ CREATE TABLE ALQUILER_TRANSPORTE (
     PRIMARY KEY (id_alquiler_transporte)
 );
 
-DROP TABLE ALQUILER_TRANSPORTE;
-
 ALTER TABLE `ALQUILER_TRANSPORTE` ADD CONSTRAINT `FK_ALQUILER_TRANSPORTE_TRUCK` FOREIGN KEY (`truck_unique_code`) REFERENCES `TRUCKS`(`truck_unique_code`);
 ALTER TABLE `ALQUILER_TRANSPORTE` ADD CONSTRAINT `FK_ALQUILER_TRANSPORTE_TYPE` FOREIGN KEY (`id_tipo_alquiler`) REFERENCES `TIPO_ALQUILER_TRANSPORTE`(`id_tipo_alquiler`);
 ALTER TABLE `ALQUILER_TRANSPORTE` ADD CONSTRAINT `FK_ALQUILER_TRANSPORTE_DEPARTAMENTO` FOREIGN KEY (`id_deparamento`) REFERENCES `DEPARTAMENTOS`(`departament_id`);
 
-SELECT * FROM ALQUILER_TRANSPORTE;
+INSERT INTO COMPANIAS (id_compania, C_descrpcion) VALUES (1, 'Mineria');
+INSERT INTO COMPANIAS (id_compania, C_descrpcion) VALUES (2, 'Materia Prima');
+INSERT INTO COMPANIAS (id_compania, C_descrpcion) VALUES (3, 'Alquiler maquinaria');
+INSERT INTO COMPANIAS (id_compania, C_descrpcion) VALUES (4, 'Construccion');
 
-INSERT INTO ALQUILER_TRANSPORTE(truck_unique_code, id_deparamento, id_tipo_alquiler, precio, descripcion ) VALUES ("ab12", 1, 1, 1, "prueba");
+CREATE TABLE PRESUPUESTOS (
+	id_prespuesto INT NOT NULL auto_increment,
+    id_compania INT NOT NULL,
+    presupuesto real,
+    PRIMARY KEY(id_prespuesto)
+);
 
+INSERT INTO PRESUPUESTOS(id_compania, presupuesto) VALUES (1, 234500);
+INSERT INTO PRESUPUESTOS(id_compania, presupuesto) VALUES (2, 172520);
+INSERT INTO PRESUPUESTOS(id_compania, presupuesto) VALUES (3, 573459);
+INSERT INTO PRESUPUESTOS(id_compania, presupuesto) VALUES (4, 6584512);
 
-SELECT * FROM TIPO_ALQUILER_TRANSPORTE;
+CREATE TABLE TIPOS_MATERIA_PRIMA (
+	id_tipo_materia_prima INT NOT NULL auto_increment,
+    tipo_matera_prima_label varchar(255),
+    primary key(id_tipo_materia_prima)
+);
+
+INSERT INTO TIPOS_MATERIA_PRIMA (tipo_matera_prima_label) VALUES ('Block');
+INSERT INTO TIPOS_MATERIA_PRIMA (tipo_matera_prima_label) VALUES ('Piso');
+
+CREATE TABLE MATERIAS_PRIMA (
+	id_materias_prima INT NOT NULL auto_increment,
+    id_tipo_materia_prima INT NOT NULL,
+    materia_prima_label varchar(255),
+    PRIMARY KEY(id_materias_prima)
+);
+
+ALTER TABLE `MATERIAS_PRIMA` ADD CONSTRAINT `FK_TIPO_MATERIAS_PRIMA` FOREIGN KEY (`id_tipo_materia_prima`) REFERENCES `TIPOS_MATERIA_PRIMA`(`id_tipo_materia_prima`);
+
+INSERT INTO MATERIAS_PRIMA (id_tipo_materia_prima, materia_prima_label) VALUES (1, 'cemento');
+INSERT INTO MATERIAS_PRIMA (id_tipo_materia_prima, materia_prima_label) VALUES (1, 'arena');
+INSERT INTO MATERIAS_PRIMA (id_tipo_materia_prima, materia_prima_label) VALUES (1, 'calizos');
+
+INSERT INTO MATERIAS_PRIMA (id_tipo_materia_prima, materia_prima_label) VALUES (2, 'Puzolánico');
+INSERT INTO MATERIAS_PRIMA (id_tipo_materia_prima, materia_prima_label) VALUES (2, 'Arena');
+INSERT INTO MATERIAS_PRIMA (id_tipo_materia_prima, materia_prima_label) VALUES (2, 'cemento');
+INSERT INTO MATERIAS_PRIMA (id_tipo_materia_prima, materia_prima_label) VALUES (2, 'Pigmento');
+
+SELECT id_materias_prima, materia_prima_label FROM MATERIAS_PRIMA WHERE id_tipo_materia_prima = 2;
+
+ALTER TABLE `PRESUPUESTOS` ADD CONSTRAINT `FK_COMPANIA` FOREIGN KEY (`id_compania`) REFERENCES `cOMPANIAS`(`id_compania`);
+
 ALTER TABLE `GPSPagos` ADD CONSTRAINT `GPSPagos_fk0` FOREIGN KEY (`id_vehiculo`) REFERENCES `Vehiculos`(`id_vehiculo`);
 
 
