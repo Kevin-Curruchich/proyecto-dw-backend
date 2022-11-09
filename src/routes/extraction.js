@@ -2,9 +2,9 @@ const express = require("express");
 const router = express.Router();
 
 const {
+  addExtraction,
   getRawMaterialFloor,
   getRawMaterialBlock,
-  addExtraction,
 } = require("../controllers/extraction");
 
 router.get("/get-raw-material-floor", getRawMaterialFloor);

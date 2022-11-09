@@ -33,10 +33,16 @@ module.exports.getRawMaterialBlock = () => {
   });
 };
 
-module.exports.addExtraction = ({ truckBrand, code, tons }) => {
+module.exports.addExtraction = ({
+  materiaPrima,
+  departamento,
+  empleadoVenta,
+  monotMinimo,
+  notas,
+}) => {
   return new Promise((resolve, reject) => {
     sql.query(
-      `INSERT INTO TRUCKS(truck_brand,truck_ton, truck_unique_code ) VALUES (${truckBrand}, ${tons}, '${code}');`,
+      `INSERT INTO EXTRACCION(id_materias_prima, departament_id, id_personal, precio, notas) VALUES (${materiaPrima}, ${departamento}, ${empleadoVenta}, ${monotMinimo}, '${notas}');`,
       function (err, result, fields) {
         if (err) {
           reject(err);

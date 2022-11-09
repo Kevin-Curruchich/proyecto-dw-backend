@@ -34,7 +34,7 @@ module.exports.addExtraction = async (req, res, next) => {
     const response = await Extraction.addExtraction(req.body);
 
     res.status(200).json({
-      message: "Extraccion registrado correctamente",
+      message: "Camion Registrado correctamente",
     });
   } catch (error) {
     res.status(400).json({ message: error });

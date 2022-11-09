@@ -33,6 +33,23 @@ module.exports.getAllTransportRentalTypes = () => {
   });
 };
 
+module.exports.getAllTransportRental = () => {
+  return new Promise((resolve, reject) => {
+    sql.query(
+      `SELECT AP.precio, AP.descripcion, AP.truck_unique_code, TA.tipo_alquiler_label FROM ALQUILER_TRANSPORTE AP INNER JOIN TIPO_ALQUILER_TRANSPORTE TA ON AP.id_tipo_alquiler = TA.id_tipo_alquiler;`,
+      function (err, result, fields) {
+        if (err) {
+          reject(err);
+          throw err;
+        } else {
+          console.log({ result });
+          resolve(result);
+        }
+      }
+    );
+  });
+};
+
 module.exports.getBudget = () => {
   return new Promise((resolve, reject) => {
     sql.query(

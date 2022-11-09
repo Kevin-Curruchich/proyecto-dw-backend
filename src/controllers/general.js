@@ -18,7 +18,20 @@ module.exports.getAllTransportRentalTypes = async (req, res, next) => {
     const response = await General.getAllTransportRentalTypes();
 
     res.status(200).json({
-      message: "departamentos",
+      message: "Tipos de renta",
+      data: [...response],
+    });
+  } catch (error) {
+    res.status(400).json({ message: error });
+  }
+};
+
+module.exports.getAllTransportRental = async (req, res, next) => {
+  try {
+    const response = await General.getAllTransportRental();
+
+    res.status(200).json({
+      message: "Renta de transportes",
       data: [...response],
     });
   } catch (error) {
