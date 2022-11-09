@@ -8,6 +8,7 @@ const guard = require("./src/guard/guard");
 const personInfo = require("./src/routes/person_info");
 const trucks = require("./src/routes/trucks");
 const extraction = require("./src/routes/extraction");
+const sales = require("./src/routes/sales");
 const transportRental = require("./src/routes/transportRental");
 const general = require("./src/routes/general");
 const personRoutes = require("./src/routes/person");
@@ -24,6 +25,7 @@ app.use(personInfo);
 app.use(bankAccountRoutes);
 app.use(trucks);
 app.use(extraction);
+app.use(sales);
 app.use(transportRental);
 app.use(general);
 

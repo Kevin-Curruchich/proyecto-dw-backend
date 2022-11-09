@@ -28,13 +28,13 @@ module.exports.getRawMaterialBlock = async (req, res, next) => {
   }
 };
 
-module.exports.addTruck = async (req, res, next) => {
+module.exports.addExtraction = async (req, res, next) => {
   try {
     console.log({ req });
-    const response = await Trucks.postNewTruck(req.body);
+    const response = await Extraction.addExtraction(req.body);
 
     res.status(200).json({
-      message: "Camion Registrado correctamente",
+      message: "Extraccion registrado correctamente",
     });
   } catch (error) {
     res.status(400).json({ message: error });

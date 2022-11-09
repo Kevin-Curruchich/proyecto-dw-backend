@@ -33,7 +33,7 @@ module.exports.getRawMaterialBlock = () => {
   });
 };
 
-module.exports.postNewTruck = ({ truckBrand, code, tons }) => {
+module.exports.addExtraction = ({ truckBrand, code, tons }) => {
   return new Promise((resolve, reject) => {
     sql.query(
       `INSERT INTO TRUCKS(truck_brand,truck_ton, truck_unique_code ) VALUES (${truckBrand}, ${tons}, '${code}');`,
