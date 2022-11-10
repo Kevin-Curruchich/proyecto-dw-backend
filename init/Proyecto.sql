@@ -208,6 +208,10 @@ CREATE TABLE ALQUILER_TRANSPORTE (
     PRIMARY KEY (id_alquiler_transporte)
 );
 
+SELECT * FROM ALQUILER_TRANSPORTE;
+
+SELECT AP.precio, AP.descripcion, AP.truck_unique_code, TA.tipo_alquiler_label FROM ALQUILER_TRANSPORTE AP INNER JOIN TIPO_ALQUILER_TRANSPORTE TA ON AP.id_tipo_alquiler = TA.id_tipo_alquiler;
+
 ALTER TABLE `ALQUILER_TRANSPORTE` ADD CONSTRAINT `FK_ALQUILER_TRANSPORTE_TRUCK` FOREIGN KEY (`truck_unique_code`) REFERENCES `TRUCKS`(`truck_unique_code`);
 ALTER TABLE `ALQUILER_TRANSPORTE` ADD CONSTRAINT `FK_ALQUILER_TRANSPORTE_TYPE` FOREIGN KEY (`id_tipo_alquiler`) REFERENCES `TIPO_ALQUILER_TRANSPORTE`(`id_tipo_alquiler`);
 ALTER TABLE `ALQUILER_TRANSPORTE` ADD CONSTRAINT `FK_ALQUILER_TRANSPORTE_DEPARTAMENTO` FOREIGN KEY (`id_deparamento`) REFERENCES `DEPARTAMENTOS`(`departament_id`);
@@ -257,7 +261,48 @@ INSERT INTO MATERIAS_PRIMA (id_tipo_materia_prima, materia_prima_label) VALUES (
 INSERT INTO MATERIAS_PRIMA (id_tipo_materia_prima, materia_prima_label) VALUES (2, 'Pigmento');
 
 SELECT id_materias_prima, materia_prima_label FROM MATERIAS_PRIMA WHERE id_tipo_materia_prima = 2;
+use dw22;
+CREATE TABLE EXTRACCION(
+	id_extraccion INT NOT NULL auto_increment,
+    id_materias_prima INT NOT NULL,
+	departament_id INT NOT NULL,
+    id_personal INT NOT NULL,
+    precio real,
+    notas varchar(255),
+    PRIMARY KEY (id_extraccion)
+);
+use dw22;
+SELECT * FROM EXTRACCION;
 
+SELECT MP.id_materias_prima, EX.notas, EX.id_extraccion, MP.materia_prima_label, EX.precio FROM EXTRACCION EX INNER JOIN MATERIAS_PRIMA MP ON EX.id_materias_prima = MP.id_materias_prima WHERE MP.id_tipo_materia_prima = 1;
+
+SELECT  AP.truck_unique_code, TA.tipo_alquiler_label FROM ALQUILER_TRANSPORTE AP INNER JOIN TIPO_ALQUILER_TRANSPORTE TA ON AP.id_tipo_alquiler = TA.id_tipo_alquiler;
+
+ALTER TABLE `EXTRACCION` ADD CONSTRAINT `FK_MATERIA_PRIMA_EXTRACCION` FOREIGN KEY (`id_materias_prima`) REFERENCES `MATERIAS_PRIMA`(`id_materias_prima`);
+ALTER TABLE `EXTRACCION` ADD CONSTRAINT `FK_dEPARTAMENTOEXTRACCION` FOREIGN KEY (`departament_id`) REFERENCES `DEPARTAMENTOS`(`departament_id`);
+ALTER TABLE `EXTRACCION` ADD CONSTRAINT `FK_ID_PERSONAL_EXTRACCION` FOREIGN KEY (`id_personal`) REFERENCES `PERSONAL`(`id_personal`);
+
+CREATE TABLE ALL_SALES(
+	id_sale INT NOT NULL auto_increment,
+    id_extraccion INT NOT NULL,
+    id_personal INT NOT NULL,
+    precio real,
+    notas varchar(255),
+    PRIMARY KEY (id_sale)
+);
+
+DROP TABLE ALL_SALES;
+
+SELECT * FROM ALL_SALES;
+SELECT ALS.id_sale, ALS.notas, ALS.precio, MP.materia_prima_label, TMP.tipo_matera_prima_label
+FROM ALL_SALES ALS INNER JOIN MATERIAS_PRIMA MP ON ALS.id_materias_prima = MP.id_materias_prima
+INNER JOIN TIPOS_MATERIA_PRIMA TMP ON TMP.id_tipo_materia_prima = MP.id_tipo_materia_prima;
+
+
+ALTER TABLE `ALL_SALES` ADD CONSTRAINT `FK_MATERIA_PRIMA_SALES` FOREIGN KEY (`id_materias_prima`) REFERENCES `MATERIAS_PRIMA`(`id_materias_prima`);
+ALTER TABLE `ALL_SALES` ADD CONSTRAINT `FK_PERSONAL_SALES` FOREIGN KEY (`id_personal`) REFERENCES `PERSONAL`(`id_personal`);
+
+-- OTRAS
 ALTER TABLE `PRESUPUESTOS` ADD CONSTRAINT `FK_COMPANIA` FOREIGN KEY (`id_compania`) REFERENCES `cOMPANIAS`(`id_compania`);
 
 ALTER TABLE `GPSPagos` ADD CONSTRAINT `GPSPagos_fk0` FOREIGN KEY (`id_vehiculo`) REFERENCES `Vehiculos`(`id_vehiculo`);
